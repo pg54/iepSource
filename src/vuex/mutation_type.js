@@ -96,6 +96,10 @@ export const SET_PRINTPAPER_MOUTHS = 'SET_PRINTPAPER_MOUTHS';
 //是否转载
 export const SET_IS_REPRINT = 'SET_IS_REPRINT';
 
+export const SET_IEP_PLAN_ID = 'SET_IEP_PLAN_ID';
+
+
+
 
 
 

@@ -8,6 +8,7 @@ import mystudent from './modules/mystudent/index';
 import questionPaper from './modules/questionPaper/index';
 import serviceArrangement from './modules/serviceArrangement/index';
 import printPaper from './modules/print/index';
+import iep from './modules/iep/index';
 
 Vue.use(Vuex);
 
@@ -17,6 +18,7 @@ export default new Vuex.Store({
       mystudent,
       questionPaper,
       serviceArrangement,
-      printPaper
+      printPaper,
+      iep
   }
 });

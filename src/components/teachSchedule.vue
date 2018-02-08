@@ -396,6 +396,7 @@
                         </div>
                     </div>
                 </div>
+                
                 <!-- 训练表 -->
                 <div class="course-content" v-show="showTrianingPaperFlag">
                     <div style="width: 800px;margin: 0 auto;height: 540px;overflow-y:scroll">

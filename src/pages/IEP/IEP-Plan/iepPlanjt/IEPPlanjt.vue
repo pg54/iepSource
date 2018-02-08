@@ -51,17 +51,17 @@
 
             <el-dialog :title="isModifyPlan? '修改计划':'新增计划'" v-model="addPlanDialogFlag" :show-close="false" :close-on-click-modal='false'
                 @close='initPlanFormData' size="small">
-                <el-form ref="form" :model="planFormData" label-width="100px">
+                <el-form ref="form" :rules="rules" :model="planFormData" label-width="100px">
 
                     <el-row :gutter="24">
                         <el-col :span="12">
-                            <el-form-item label="标题:">
+                            <el-form-item label="标题:" prop='Title'>
                                 <el-input v-model="planFormData.Title"></el-input>
                             </el-form-item>
                         </el-col>
 
                         <el-col :span="12">
-                            <el-form-item label="时间:">
+                            <el-form-item label="时间:" prop='StartDate'>
                                 <el-date-picker style="width: 80%" type="date" placeholder="选择日期" v-model="planFormData.StartDate" :picker-options="pickerOptions0"></el-date-picker>
                             </el-form-item>
                         </el-col>
@@ -70,7 +70,7 @@
                     <div>
                         <el-row :gutter="24">
                             <el-col :span="12">
-                                <el-form-item label="患者组:">
+                                <el-form-item label="患者组:" prop='GroupID'>
                                     <el-select style="width: 100%" v-model="planFormData.GroupID" placeholder="请选择小组">
                                         <el-option v-for="(item, index) in groupData" :key="item.GroupID" :label=item.groupName :value=item.groupID>
                                         </el-option>
@@ -80,19 +80,21 @@
                         </el-row>
                     </div>
 
-                        <el-row :gutter="24">
-                            <el-col :span="12">
-                                <el-form-item label="课程包:">
-                                    <el-select v-model="planFormData.PaperPackageID" placeholder="请选择课程包" style="width:100%">
-                                        <el-option v-for="o in packageData" :label="o.Name" :value="o.ID"></el-option>
-                                    </el-select>
-                                </el-form-item>
-                            </el-col>
-                        </el-row>
+
+
+                    <el-row :gutter="24">
+                        <el-col :span="12">
+                            <el-form-item label="课程包:" prop='PaperPackageID'>
+                                <el-select v-model="planFormData.PaperPackageID" placeholder="请选择课程包" style="width:100%">
+                                    <el-option v-for="o in packageData" :label="o.Name" :value="o.ID"></el-option>
+                                </el-select>
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
                 </el-form>
                 <div slot="footer" class="dialog-footer">
                     <el-button @click.native="planCancel()">返回</el-button>
-                    <el-button type="primary" @click.native="planSubmit()">提交</el-button>
+                    <el-button type="primary" @click.native="planSubmit('form')">提交</el-button>
                 </div>
             </el-dialog>
         </div>
@@ -123,6 +125,31 @@
                     GroupID: '',
                     StudentID: '',
                     PaperPackageID: ''
+                },
+                rules: {
+                    Title: [{
+                        required: true,
+                        message: '请输入计划名称',
+                        trigger: 'blur'
+                    }],
+                    StartDate: [{
+                        type: 'date',
+                        required: true,
+                        message: '请填写计划日期',
+                        trigger: 'blur'
+                    }],
+                    GroupID: [{
+                        required: true,
+                        type: 'number',
+                        message: '请选择患者组',
+                        trigger: 'blur'
+                    }],
+                    PaperPackageID: [{
+                        required: true,
+                        type: 'number',
+                        message: '请选择课程包',
+                        trigger: 'blur'
+                    }],
                 },
                 pickerOptions0: {
                     disabledDate(time) {
@@ -167,6 +194,22 @@
             addGroupPlan: function () {
                 this.initPlanFormData();
                 this.addPlanDialogFlag = true;
+            },
+            modifyGroupPlan(item) {
+                this.planFormData.StudentID = item.ID
+                api.getPlanDetail(item.ID).then(res => {
+                    this.addPlanDialogFlag = true;
+                    this.isModifyPlan = true;
+                    this.planFormData = res
+                    // this.planFormData.ID = res.ID;
+                    // this.planFormData.Title = res.Title;
+                    // this.planFormData.PaperPackageID = res.PaperPackageID;
+                    // this.planFormData.StudentID = res.StudentID;
+                    // this.planFormData.GroupID = res.GroupID;
+                    // this.planFormData.Type = res.Type;
+                    // this.planFormData.StartDate = res.StartDate;
+                    // this.planFormData.Template = res.Template;
+                });
             },
             //删除计划
             removePlan(id) {
@@ -234,44 +277,48 @@
                     PaperPackageID: ''
                 }
             },
-            planSubmit() {
-                this.planFormData.Template = 0;
-                this.planFormData.Type = 0;
-                if (this.planFormData.GroupID === "") {
-                    this.$message.warning('请选择患者组!');
-                    return;
-                }
-                if (this.planFormData.Title === "") {
-                    this.$message.warning('请填写教学计划名称!');
-                    return;
-                }
-                if (this.planFormData.StartDate === "") {
-                    this.$message.warning('请填写教学计划开始时间!');
-                    return;
-                }
-                if (this.planFormData.PaperPackageID === "") {
-                    this.$message.warning('请选择课程包!');
-                    return;
-                }
-
-                this.planFormData.Courses = this.getCourseArray(this.planFormData.PaperPackageID);
-                var params = this.planFormData;
-
-                // let isAdd = params.ID === '' ? true : false;
-                api.modifyPlan(params).then(res => {
-                    if (res.Status) {
-                        if (params.Type == 1) {
-                            this.$message.success('保存计划成功');
-                        } else {
-                            this.$message.success('保存计划成功!');
-                        }
-                        this.requestGroupPlanData(1);
-                        //提交成功后，对新增计划的学期计划默认操作 暂不写
+            planSubmit(formName) {
+                this.$refs[formName].validate((valid => {
+                    if (valid) {
+                        this.planFormData.Template = 0;
+                        this.planFormData.Type = 0;
+                        this.planFormData.Courses = this.getCourseArray(this.planFormData.PaperPackageID);
+                        var params = this.planFormData;
+                        api.modifyPlan(params)
+                            .then(res => {
+                                console.log(res);
+                                if (res.Status) {
+                                    this.$message.success('保存计划成功!');
+                                    this.requestGroupPlanData(1);
+                                    //提交成功后，对新增计划的学期计划默认操作 暂不写
+                                } else {
+                                    this.$message.error(res.Msg);
+                                }
+                                this.planCancel();
+                            }).catch(err => {
+                                this.$message.error(err.Msg);
+                            })
+                        
                     } else {
-                        this.$message.error(res.Message);
+                        this.$message.warning('请完善计划信息！')
                     }
-                });
-                this.planCancel();
+                }))
+                // if (this.planFormData.GroupID === "") {
+                //     this.$message.warning('请选择患者组!');
+                //     return;
+                // }
+                // if (this.planFormData.Title === "") {
+                //     this.$message.warning('请填写教学计划名称!');
+                //     return;
+                // }
+                // if (this.planFormData.StartDate === "") {
+                //     this.$message.warning('请填写教学计划开始时间!');
+                //     return;
+                // }
+                // if (this.planFormData.PaperPackageID === "") {
+                //     this.$message.warning('请选择课程包!');
+                //     return;
+                // }
             },
             //获取已选中课程
             getCourseArray(id) {
@@ -290,7 +337,8 @@
             goPlanDetails(row) {
                 let id = row.ID
                 this.$store.dispatch('setIEPPlanID', id);
-                this.$router.push({ path: `/iep/iepPlan/iepPlanjt/iepPlanList`})
+                this.$router.push('/iep/iepPlan/iepPlanjt/iepPlanjtList')
+                // /iep/iepPlan/iep/iepPlan/iepPlanjt/iepPlanjtList
             },
         },
         created() {

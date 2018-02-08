@@ -1,6 +1,9 @@
 <template>
     <div id="appMain" class="appWrap" v-loading="homeLoading" element-loading-text="拼命加载中">
         <Navbar></Navbar>
+        <div style="height: 60px;z-index: 100;position:absolute;top: 94px;color: red;">
+            <p>面包屑</p>
+        </div>
         <div class="main">
             <router-view key="key"></router-view>
         </div>

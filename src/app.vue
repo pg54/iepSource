@@ -2,7 +2,7 @@
   <div id="app">
     <div class="fullWidthContent">
       <div class="centerContent">
-        <router-view></router-view>
+          <router-view></router-view>
       </div>
     </div>
   </div>

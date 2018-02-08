@@ -84,7 +84,9 @@ import vueTab from '../../../../../components/vue-tab.vue'
 import api from '../../../../../api/index.js'
     export default {
         name: 'IEPPlanjtList',
-        components: {},
+        components: {
+            vueTab
+        },
         data() {
             return {
                 vueTabArr: ['学期计划', '月计划', '周计划'],
@@ -138,6 +140,96 @@ import api from '../../../../../api/index.js'
         left: 0;
         width: 100%;
         height: 583px;
+    }
+
+    .planWrap {
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+
+    .tab-content-container {
+        width: 100%;
+        height: 540px;
+        overflow: hidden;
+    }
+
+    .center-content {
+        width: 1120px;
+        margin: 0 auto;
+        height: 536px;
+        overflow-y: scroll;
+    }
+    /*.tab-content-container::-webkit-scrollbar {*/
+    /*width: 12px;*/
+    /*background-color: #F5F5F5;*/
+    /*}*/
+    /*.tab-content-container::-webkit-scrollbar-thumb {*/
+    /*border-radius: 10px;*/
+    /*-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);*/
+    /*background-color: #D62929;*/
+    /*}*/
+    /*.tab-content-container::-webkit-scrollbar-track {*/
+    /*-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);*/
+    /*border-radius: 10px;*/
+    /*background-color: #F5F5F5;*/
+    /*}*/
+
+    .contentBox .item {
+        position: relative;
+        width: 1020px;
+        height: 104px;
+        margin: 10px auto;
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .12), 0 0 6px 0 rgba(0, 0, 0, .04);
+    }
+
+    .titleBoxContent {
+        width: 245px;
+        height: 32px;
+        text-align: center;
+        line-height: 32px;
+        font-size: 16px;
+        color: #ffffff;
+        font-weight: bold;
+    }
+
+    .planItemContent {
+        position: absolute;
+        top: 32px;
+        left: 0;
+        width: 100%;
+        height: 72px;
+        background-color: rgba(233, 248, 255, 1);
+        -webkit-border-radius: 0 0 6px 6px;
+        -moz-border-radius: 0 0 6px 6px;
+        border-radius: 0 0 6px 6px;
+    }
+
+    .planItemContentLeft {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 250px;
+        height: 100%;
+        border-right: 1px dotted #30BCFC;
+        display: inline-flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .planItemContentRight {
+        position: absolute;
+        top: 0;
+        left: 250px;
+        width: 770px;
+        height: 100%;
+        padding-right: 50px;
+        display: inline-flex;
+        justify-content: flex-end;
+        align-items: center;
+        /*display: inline-block;*/
+        /*line-height: 70px;*/
     }
 
 

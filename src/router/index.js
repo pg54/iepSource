@@ -91,7 +91,18 @@ const IEPBasicInfo = r => require.ensure([], () => r(require('../pages/IEP/IEP-B
 // import IEPaAnalysis from '../pages/IEP/IEP-Analysis.vue';
 const IEPaAnalysis = r => require.ensure([], () => r(require('../pages/IEP/IEP-Analysis.vue')), 'group-g')
 // import IEPPlan from '../pages/IEP/IEP-Plan.vue';
-const IEPPlan = r => require.ensure([], () => r(require('../pages/IEP/IEP-Plan.vue')), 'group-g')
+// const IEPPlan = r => require.ensure([], () => r(require('../pages/IEP/IEP-Plan.vue')), 'group-g')
+
+import IEPPlan from '../pages/IEP/IEP-Plan/IEP-Plan.vue';
+import IEPPlanjt from '../pages/IEP/IEP-Plan/iepPlanjt/IEPPlanjt.vue';
+import IEPPlanjtList from '../pages/IEP/IEP-Plan/iepPlanjt/iepPlanjtList/IEPPlanjtList.vue';
+import IEPPlanjtItem from '../pages/IEP/IEP-Plan/iepPlanjt/iepPlanjtList/iepPlanjtItem/IEPPlanjtItem.vue';
+import IEPPlanjtItemDetail from '../pages/IEP/IEP-Plan/iepPlanjt/iepPlanjtList/iepPlanjtItem/children/IEPPlanjtItemDetail.vue';
+import IEPPlanjtItemEdit from '../pages/IEP/IEP-Plan/iepPlanjt/iepPlanjtList/iepPlanjtItem/children/IEPPlanjtItemEdit.vue';
+import IEPPlanjtItemPaper from '../pages/IEP/IEP-Plan/iepPlanjt/iepPlanjtList/iepPlanjtItem/children/IEPPlanjtItemPaper.vue';
+
+import IEPPlanPerson from '../pages/IEP/IEP-Plan/iepPlanPerson/IEPPlanPerson.vue';
+
 // import IEPSchedule from '../pages/IEP/IEP-Schedule/IEP-Schedule.vue';
 const IEPSchedule = r => require.ensure([], () => r(require('../pages/IEP/IEP-Schedule/IEP-Schedule.vue')), 'group-g')
 // import IEPlibrary from '../pages/IEP/IEP-library.vue';
@@ -221,17 +232,43 @@ export default new VueRouter({
                     children: [
                         { path: 'iepBasicInfo', component: IEPBasicInfo, name: 'iepBasicInfo' },
                         { path: 'iepAnalysis', component: IEPaAnalysis, name: 'iepAnalysis' },
-                        { path: 'iepPlan', component: IEPPlan, name: 'iepPlan' },
-                        // {
-                        //   path: 'iepPlan',
-                        //   component: IEPPlan,
-                        //   name: 'iepPlan',
-                        //   children: [
-                        //     { path: 'iepPlanDetail', component: IEPPlanDetail, name: 'iepPlanDeatail' },
-                        //     { path: 'planItemDetail', component: PlanItemDetail, name: 'planItemDetail' },
-                        //     { path: 'iepCourse', component: IEPCourse, name: 'iepCourse' }
-                        //   ]
-                        // },
+                        {
+                            path: 'iepPlan',
+                            component: IEPPlan,
+                            name: 'iepPlan',
+                            children: [
+                                {
+                                    path: '',
+                                    redirect: 'iepPlanjt'
+                                },
+                                {
+                                    path: 'iepPlanjt', 
+                                    component: IEPPlanjt,
+                                    name: 'iepPlanjt',
+                                    children: [
+                                        {
+                                            path: 'iepPlanjtList', 
+                                            component: IEPPlanjtList,
+                                            name: 'iepPlanjtList',
+                                            children: [
+                                                {
+                                                    path: 'iepPlanjtItem', 
+                                                    component: IEPPlanjtItem,
+                                                    name: 'iepPlanjtItem',
+                                                    children: [
+                                                        {path: 'iepPlanjtItemDetail', component: IEPPlanjtItemDetail, name: 'iepPlanjtItemDetail'},
+                                                        {path: 'iepPlanjtItemEdit', component: IEPPlanjtItemEdit, name: 'iepPlanjtItemEdit'},
+                                                        {path: 'iepPlanjtItemPaper', component: IEPPlanjtItemPaper, name: 'iepPlanjtItemPaper'},
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+
+                                },
+                                {path: 'iepPlanPerson', component: IEPPlanPerson, name: 'iepPlanPerson'},
+                            ]
+                        },
                         { path: 'iepSchedule', component: IEPSchedule, name: 'iepSchedule' },
                         { path: 'ieplibrary', component: IEPlibrary, name: 'ieplibrary' },
                         { path: 'iepStudy', component: IEPStudy, name: 'iepStudy' },

@@ -91,7 +91,7 @@ const IEPBasicInfo = r => require.ensure([], () => r(require('../pages/IEP/IEP-B
 // import IEPaAnalysis from '../pages/IEP/IEP-Analysis.vue';
 const IEPaAnalysis = r => require.ensure([], () => r(require('../pages/IEP/IEP-Analysis.vue')), 'group-g')
 // import IEPPlan from '../pages/IEP/IEP-Plan.vue';
-
+const IEPPlan = r => require.ensure([], () => r(require('../pages/IEP/IEP-Plan.vue')), 'group-g')
 // import IEPSchedule from '../pages/IEP/IEP-Schedule/IEP-Schedule.vue';
 const IEPSchedule = r => require.ensure([], () => r(require('../pages/IEP/IEP-Schedule/IEP-Schedule.vue')), 'group-g')
 // import IEPlibrary from '../pages/IEP/IEP-library.vue';
@@ -107,22 +107,17 @@ const IEPFeedback = r => require.ensure([], () => r(require('../pages/IEP/IEP-Fe
 
 // import DataAnalysis from '../pages/DataAnalysis/DataAnalysis.vue';
 const DataAnalysis = r => require.ensure([], () => r(require('../pages/DataAnalysis/DataAnalysis.vue')), 'group-h')
+const DataAnalysisHistory = r => require.ensure([], () => r(require('../pages/DataAnalysis/children/DataAnalysisHistory.vue')), 'group-h')
+const DataAnalysisCompare = r => require.ensure([], () => r(require('../pages/DataAnalysis/children/DataAnalysisCompare.vue')), 'group-h')
+const DataAnalysisPatient = r => require.ensure([], () => r(require('../pages/DataAnalysis/children/DataAnalysisPatient.vue')), 'group-h')
 
 // const EchartsAnalysis = r => require.ensure([], () => r(require('../pages/DataAnalysis/echartsAnalysis.vue')), 'group-i')
 // import highChart from '../pages/DataAnalysis/hightChartAnalysis.vue';
 // const highChart = r => require.ensure([], () => r(require('../pages/DataAnalysis/hightChartAnalysis.vue')), 'group-h')
-// const IEPPlan = r => require.ensure([], () => r(require('../pages/IEP/IEP-Plan/IEP-Plan.vue')), 'group-g')
-import IEPPlan from '../pages/IEP/IEP-Plan/IEP-Plan.vue';
-import IEPPlanjt from '../pages/IEP/IEP-Plan/iepPlanjt/IEPPlanjt.vue';
-import IEPPlanjtList from '../pages/IEP/IEP-Plan/iepPlanjt/iepPlanjtList/IEPPlanjtList.vue';
-import IEPPlanjtItem from '../pages/IEP/IEP-Plan/iepPlanjt/iepPlanjtList/iepPlanjtItem/IEPPlanjtItem.vue';
-import IEPPlanjtItemDetail from '../pages/IEP/IEP-Plan/iepPlanjt/iepPlanjtList/iepPlanjtItem/children/IEPPlanjtItemDetail.vue';
-import IEPPlanjtItemEdit from '../pages/IEP/IEP-Plan/iepPlanjt/iepPlanjtList/iepPlanjtItem/children/IEPPlanjtItemEdit.vue';
-import IEPPlanjtItemPaper from '../pages/IEP/IEP-Plan/iepPlanjt/iepPlanjtList/iepPlanjtItem/children/IEPPlanjtItemPaper.vue';
 
-import IEPPlanPerson from '../pages/IEP/IEP-Plan/iepPlanPerson/IEPPlanPerson.vue';
-
-
+// import IEPPlanDetail from '../pages/IEP/IEP-Plan/child/IEP-Plan-detail.vue';
+// import PlanItemDetail from '../pages/IEP/IEP-Plan/child/IEP-PALNITEM-details.vue';
+// import IEPCourse from '../pages/IEP/IEP-Plan/child/IEP-Course.vue';
 // import DynamicTracking from '../pages/InformCooperation/DymamicTracking.vue';
 // import NoticeReminder from '../pages/InformCooperation/NoticeReminder.vue';
 
@@ -226,49 +221,17 @@ export default new VueRouter({
                     children: [
                         { path: 'iepBasicInfo', component: IEPBasicInfo, name: 'iepBasicInfo' },
                         { path: 'iepAnalysis', component: IEPaAnalysis, name: 'iepAnalysis' },
-                        // { path: 'iepPlan', component: IEPPlan, name: 'iepPlan' },
-                        {
-                          path: 'iepPlan',
-                          component: IEPPlan,
-                          name: 'iepPlan',
+                        { path: 'iepPlan', component: IEPPlan, name: 'iepPlan' },
+                        // {
+                        //   path: 'iepPlan',
+                        //   component: IEPPlan,
+                        //   name: 'iepPlan',
                         //   children: [
                         //     { path: 'iepPlanDetail', component: IEPPlanDetail, name: 'iepPlanDeatail' },
                         //     { path: 'planItemDetail', component: PlanItemDetail, name: 'planItemDetail' },
                         //     { path: 'iepCourse', component: IEPCourse, name: 'iepCourse' }
                         //   ]
-                            children: [
-                                {
-                                    path: '',
-                                    redirect: 'iepPlanjt'
-                                },
-                                {
-                                    path: 'iepPlanjt', 
-                                    component: IEPPlanjt,
-                                    name: 'iepPlanjt',
-                                    children: [
-                                        {
-                                            path: 'iepPlanjtList', 
-                                            component: IEPPlanjtList,
-                                            name: 'iepPlanjtList',
-                                            children: [
-                                                {
-                                                    path: 'iepPlanjtItem', 
-                                                    component: IEPPlanjtItem,
-                                                    name: 'iepPlanjtItem',
-                                                    children: [
-                                                        {path: 'iepPlanjtItemDetail', component: IEPPlanjtItemDetail, name: 'iepPlanjtItemDetail'},
-                                                        {path: 'iepPlanjtItemEdit', component: IEPPlanjtItemEdit, name: 'iepPlanjtItemEdit'},
-                                                        {path: 'iepPlanjtItemPaper', component: IEPPlanjtItemPaper, name: 'iepPlanjtItemPaper'},
-                                                    ]
-                                                }
-                                            ]
-                                        }
-                                    ]
-
-                                },
-                                {path: 'iepPlanPerson', component: IEPPlanPerson, name: 'iepPlanPerson'},
-                            ]
-                        },
+                        // },
                         { path: 'iepSchedule', component: IEPSchedule, name: 'iepSchedule' },
                         { path: 'ieplibrary', component: IEPlibrary, name: 'ieplibrary' },
                         { path: 'iepStudy', component: IEPStudy, name: 'iepStudy' },
@@ -371,7 +334,17 @@ export default new VueRouter({
             name: 'home',
             component: Home,
             children: [
-                { path: 'dataAnalysis', component: DataAnalysis, name: 'dataAnalysis' }
+                { 
+                    path: 'dataAnalysis', 
+                    component: DataAnalysis, 
+                    name: 'dataAnalysis',
+                    children: [
+                        {path: '', redirect: 'dataAnalysisHistory'},
+                        { path: 'dataAnalysisHistory', component: DataAnalysisHistory, name: 'dataAnalysisHistory' },
+                        { path: 'dataAnalysisCompare', component: DataAnalysisCompare, name: 'dataAnalysisCompare' },
+                        { path: 'dataAnalysisPatient', component: DataAnalysisPatient, name: 'dataAnalysisPatient' },
+                    ]
+                }
                 // { path: 'echartsAnalysis', component: EchartsAnalysis, name: 'echartsAnalysis' }
             ]
         },

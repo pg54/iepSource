@@ -88,5 +88,4 @@
     border-left: 6px solid #31BBFC
 }
 
-
 </style>
